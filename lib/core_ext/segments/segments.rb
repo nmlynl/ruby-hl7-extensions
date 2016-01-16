@@ -1,0 +1,5 @@
+require 'core_ext/segments/msh'
+require 'core_ext/segments/pid'
+require 'core_ext/segments/obr'
+require 'core_ext/segments/obx'
+require 'core_ext/segments/nte'
