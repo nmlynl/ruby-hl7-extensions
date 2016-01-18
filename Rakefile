@@ -13,7 +13,7 @@ require 'simplecov'
 $: << './lib'
 require 'extensions'
 
-full_name = "Ruby-HL7"
+full_name = "Ruby-HL7-Extensions"
 short_name = full_name.downcase
 
 # Many of these tasks were garnered from zenspider's Hoe
@@ -28,9 +28,9 @@ spec = Gem::Specification.new do |s|
   s.version = "0.0.1"
   s.author = "Nick Lega"
   s.email = "ruby-hl7@googlegroups.com"
-  s.homepage = "https://github.com/nmlynl/ruby-hl7-json"
+  s.homepage = "https://github.com/nmlynl/ruby-hl7-extensions"
   s.platform = Gem::Platform::RUBY
-  s.summary = "Ruby HL7 JSON Library"
+  s.summary = "Ruby HL7 Library w/Extensions"
   s.rubyforge_project = short_name
   s.description = "A simple library to parse and generate HL7 2.x messages and spit out json"
   s.files = FileList["{bin,lib,test_data}/**/*"].to_a
