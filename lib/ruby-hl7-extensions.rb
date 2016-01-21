@@ -15,6 +15,7 @@
 # == License
 # see the LICENSE file
 #
+
 require 'ruby-hl7'
 require 'core_ext/message'
 require 'core_ext/segment'

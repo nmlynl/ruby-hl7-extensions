@@ -9,6 +9,10 @@ module Extensions
         end
         
         module InstanceMethods
+          def ordering_provider_hash
+            to_hash["orderingProvider"]
+          end
+          
           def ordering_provider_name
             "#{@hash["orderingProvider"][0]["lastName"]}, #{@hash["orderingProvider"][0]["firstName"]}#{@hash["orderingProvider"][0]["middleInitOrName"].blank? ? "" : " #{@hash["orderingProvider"][0]["middleInitOrName"]}"}"
           end
@@ -21,7 +25,7 @@ module Extensions
           def to_hash
             universalServiceId = self.universal_service_id.split("^") rescue Array.new(10) {|i|""}
             collectionVolume = self.collection_volume.split("^") rescue Array.new(10) {|i|""}
-            orderingProvier = self.ordering_provider.split("^") rescue Array.new(10) {|i|""}
+            orderingProvider = self.ordering_provider.split("^") rescue Array.new(20) {|i|""}
             quantityTiming = self.quantity_timing.split("^") rescue Array.new(10) {|i|""}
             resultCopiesTo = self.result_copies_to.split("^") rescue Array.new(10) {|i|""}
             parent = self.parent.split("^") rescue Array.new(10) {|i|""}
@@ -47,10 +51,22 @@ module Extensions
                    "specimenSource" => self.specimen_source,
                    "orderingProvider" => [
                         {
-                          "id" => orderingProvier[0],
-                          "lastName" => orderingProvier[1],
-                          "firstName" => orderingProvier[2],
-                          "middleInitOrName" => orderingProvier[3]
+                          "id" => orderingProvider[0],
+                          "lastName" => orderingProvider[1],
+                          "firstName" => orderingProvider[2],
+                          "middleInitOrName" => orderingProvider[3],
+                          "suffix" => orderingProvider[4],
+                          "prefix" => orderingProvider[5],
+                          "degree" => orderingProvider[6],
+                          "sourceTable" => orderingProvider[7],
+                          "assigningAuthority" => orderingProvider[8],
+                          "nameTypeCode" => orderingProvider[9],
+                          "identifierCheckDigit" => orderingProvider[10],
+                          "checkDigitScheme" => orderingProvider[11],
+                          "idTypeCode" => orderingProvider[12],
+                          "isTypeCode" => orderingProvider[13],
+                          "assigningFacility" => orderingProvider[14],
+                          "providerType" => "OP"
                         }
                       ],
                     "orderCallBackNumber" => self.order_callback_phone_number,

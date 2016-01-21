@@ -47,3 +47,7 @@ module Extensions
     end
   end
 end
+
+class HL7::Message::Segment
+  include Extensions::HL7::Segment
+end

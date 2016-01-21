@@ -11,7 +11,7 @@ require 'rspec/core/rake_task'
 require 'simplecov'
 
 $: << './lib'
-require 'extensions'
+require 'ruby-hl7-extensions'
 
 full_name = "Ruby-HL7-Extensions"
 short_name = full_name.downcase

@@ -3,3 +3,14 @@ require 'core_ext/segments/pid'
 require 'core_ext/segments/obr'
 require 'core_ext/segments/obx'
 require 'core_ext/segments/nte'
+require 'core_ext/segments/nk1'
+require 'core_ext/segments/pv1'
+
+segments = ["MSH","PID","OBR","OBX","NTE","NK1", "PV1"]
+segments.each do |segment_name|
+
+  eval("class HL7::Message::Segment::#{segment_name} < HL7::Message::Segment
+    include Extensions::HL7::Segments::#{segment_name}
+  end")
+
+end
