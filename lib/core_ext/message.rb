@@ -31,7 +31,7 @@ module Extensions
         end
         
         def event
-          hash[:message][:content]["EVN"]
+          hash[:message][:content]["MSH"]["messageEvent"]
         end
         
         def sending_application
@@ -47,6 +47,12 @@ module Extensions
           Date.parse(hash["message"]["content"]["PID"]["dateTimeBirth"]).strftime("%B %d, %Y")
         end
 
+        def patient_mrn
+          pid = hash["message"]["content"]["PID"]
+          @pid ||= ::HL7::Message::Segment.from_hash("PID", pid)
+          @pid.mrn
+        end
+
         def patient_gender
           hash["message"]["content"]["PID"]["sex"]
         end
@@ -56,6 +62,11 @@ module Extensions
           a.to_enum(:each)
         end
 
+        def patient_visit
+          patient_visit = hash["message"]["content"]["PV1"]
+          ::HL7::Message::Segment.from_hash("PV1", patient_visit)
+        end
+        
         def hash 
           to_hash
         end

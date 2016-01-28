@@ -9,6 +9,14 @@ module Extensions
         end
         
         module InstanceMethods
+          def [](key)
+            to_hash[key]
+          end
+          
+          def account_number
+            to_hash["visit"]["id"]
+          end
+          
           def admitting_provider_hash
             to_hash["admittingProvider"].merge("providerType" => "AD")
           end

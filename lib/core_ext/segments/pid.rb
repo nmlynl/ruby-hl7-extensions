@@ -9,14 +9,22 @@ module Extensions
         end
         
         module InstanceMethods
+          def mrn 
+            to_hash["internalId"]["id"]
+          end
+          
           def to_hash
+            return @hash if @hash
+            
             patient_name = self.patient_name.split("^") rescue Array.new(10) {|i| "" }
             address = self.address.split("^") rescue Array.new(10) {|i| "" }
             patientAccountNumber = self.account_number.split("^") rescue Array.new(10) {|i| "" }
-    
+            internalId = self.patient_id_list.split("^") rescue Array.new(10) {|i| "" }
+
             @hash = {"setId" => self.set_id,
                      "externalId" => self.patient_id, 
-                     "internalId" => {"id" => self.patient_id_list, "type"=>""}, 
+                     "internalId" => {"id" => internalId[0], "check_digit" => internalId[1], "check_digit_scheme" => internalId[2], 
+                                      "assigning_authority" => internalId[3], "type" => internalId[4], "assigning_facility" => internalId[5]}, 
                      "alternateId" => self.alt_patient_id, 
                      "patientName" => {"lastName" => patient_name[0], "firstName" => patient_name[1], "middleInitOrName"=> patient_name[2]}, 
                      "mothersMaidenName" => self.mother_maiden_name, 
