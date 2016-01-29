@@ -9,6 +9,10 @@ module Extensions
       end
       
       module InstanceMethods
+  
+        def [](key)
+          to_hash[key]
+        end
         
         def segment_name
           self.class.to_s.split("::").last

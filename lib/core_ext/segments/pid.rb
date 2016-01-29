@@ -13,6 +13,10 @@ module Extensions
             to_hash["internalId"]["id"]
           end
           
+          def gender
+            to_hash["sex"]
+          end
+          
           def to_hash
             return @hash if @hash
             

@@ -9,9 +9,6 @@ module Extensions
         end
         
         module InstanceMethods
-          def [](key)
-            to_hash[key]
-          end
           
           def account_number
             to_hash["visit"]["id"]

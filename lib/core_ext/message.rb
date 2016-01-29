@@ -62,9 +62,19 @@ module Extensions
           a.to_enum(:each)
         end
 
+        def patient
+          patient = hash["message"]["content"]["PID"]
+          ::HL7::Message::Segment.from_hash("PID", patient)
+        end
+
         def patient_visit
           patient_visit = hash["message"]["content"]["PV1"]
           ::HL7::Message::Segment.from_hash("PV1", patient_visit)
+        end
+
+        def orc_list
+          a = hash["message"]["content"]["ORC"]["array"].collect {|orc| ::HL7::Message::Segment.from_hash("ORC", orc)}
+          a.to_enum(:each)
         end
         
         def hash 
@@ -72,41 +82,58 @@ module Extensions
         end
         
         def to_hash
-          return @hash unless @hash.blank?
-          @hash ||= HashWithIndifferentAccess.new
-          @hash[:message] = {content: {}}
+          begin
+            return @hash unless @hash.blank?
+            @hash ||= HashWithIndifferentAccess.new
+            @hash[:message] = {content: {}}
 
-          last_segment = nil
-          self.each do |segment|
-            segment_name = segment.segment_name
-            if segment_name == "OBR"
-              @hash[:message][:content][segment_name.to_sym] ||= {}
-              @hash[:message][:content][segment_name.to_sym]["array"] ||= []
-              @hash[:message][:content][segment_name.to_sym]["array"] << segment.to_hash
+            last_segment = nil
+            self.each do |segment|
+              segment_name = segment.segment_name
+              if segment_name == "OBR"
+                @hash[:message][:content][segment_name.to_sym] ||= {}
+                @hash[:message][:content][segment_name.to_sym]["array"] ||= []
+                @hash[:message][:content][segment_name.to_sym]["array"] << segment.to_hash
 
-              @hash[:message][:content][segment_name.to_sym]["array"]
-
-              last_segment = segment_name
-            elsif segment_name == "OBX"
-              if last_segment == "OBR"
-                @hash[:message][:content]["OBR"]["array"].last[segment_name] ||= {}
-                @hash[:message][:content]["OBR"]["array"].last[segment_name]["array"] ||= []
-                @hash[:message][:content]["OBR"]["array"].last[segment_name]["array"] << segment.to_hash
+                @hash[:message][:content][segment_name.to_sym]["array"]
+                if last_segment == "ORC"
+                  @hash[:message][:content]["ORC"]["array"].last["OBR"] ||= {}
+                  @hash[:message][:content]["ORC"]["array"].last["OBR"]["array"] ||= []
+                  @hash[:message][:content]["ORC"]["array"].last["OBR"]["array"] << segment.to_hash
+                else
+                  last_segment = segment_name
+                end
+              elsif segment_name == "OBX"
+                if last_segment == "OBR"
+                  @hash[:message][:content]["OBR"]["array"].last[segment_name] ||= {}
+                  @hash[:message][:content]["OBR"]["array"].last[segment_name]["array"] ||= []
+                  @hash[:message][:content]["OBR"]["array"].last[segment_name]["array"] << segment.to_hash
+                end
+              elsif segment_name == "ORC"
+                @hash[:message][:content]["ORC"] ||= {}
+                @hash[:message][:content]["ORC"]["array"] ||= []
+                @hash[:message][:content]["ORC"]["array"] << segment.to_hash
+                last_segment = segment_name
+              elsif segment_name == "NTE"
+                if last_segment == "OBR"
+                  @hash[:message][:content]["OBR"]["array"].last["OBX"] ||= {}
+                  @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"] ||= []
+                  if @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].length>0
+                    @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].last["notes"] ||= [] 
+                    @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].last["notes"] << segment.to_hash
+                  end
+                end
+              else
+                @hash[:message][:content][segment_name.to_sym] = segment.to_hash
               end
-            elsif segment_name == "NTE"
-              if last_segment == "OBR"
-                @hash[:message][:content]["OBR"]["array"].last["OBX"] ||= {}
-                @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"] ||= []
-                @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].last["notes"] ||= [] if @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].length>0
-                @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].last["notes"] << segment.to_hash
-              end
-            else
-              @hash[:message][:content][segment_name.to_sym] = segment.to_hash
+              @hash[:message][:content]["EVN"] = @hash[:message][:content]["MSH"]["messageEvent"] if segment_name == "MSH"
             end
-            @hash[:message][:content]["EVN"] = @hash[:message][:content]["MSH"]["messageEvent"] if segment_name == "MSH"
-          end
 
-          @hash
+            @hash
+          rescue => e
+            puts e.message
+            pp e.backtrace[0..10]
+          end
         end
 
         def to_json
