@@ -105,7 +105,7 @@ module Extensions
                       {field_name: "Floor", type: "String", field_code: "3.8"},
                       {field_name: "Admission Type", type: "String", field_code: "4"},
                       {field_name: "Preadmit Number ID", type: "String", field_code: "5.1"},
-                      {field_name: "Visit Number ID", type: "String", field_code: "19.1"}}}
+                      {field_name: "Visit Number ID", type: "String", field_code: "19.1"}]
             }
           end
         end
