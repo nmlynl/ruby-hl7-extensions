@@ -98,14 +98,14 @@ module Extensions
         
         module ClassMethods
           def mappings
-            {pv1: {metadata: {display_name: "Patient Visit"},
-                   fields: {"2": {field_name: "Patient Class", type: "String"},
-                            "3.1": {field_name: "Point of Care", type: "String"},
-                            "3.4": {field_name: "Facility", type: "String"},
-                            "3.8": {field_name: "Floor", type: "String"},
-                            "4": {field_name: "Admission Type", type: "String"},
-                            "5.1": {field_name: "Preadmit Number ID", type: "String"},
-                            "19.1": {field_name: "Visit Number ID", type: "String"}}}
+            {metadata: {segment_code: "pv1", display_name: "Patient Visit"},
+             fields: [{field_name: "Patient Class", type: "String", field_code: "2"},
+                      {field_name: "Point of Care", type: "String", field_code: "3.1"},
+                      {field_name: "Facility", type: "String", field_code: "3.4"},
+                      {field_name: "Floor", type: "String", field_code: "3.8"},
+                      {field_name: "Admission Type", type: "String", field_code: "4"},
+                      {field_name: "Preadmit Number ID", type: "String", field_code: "5.1"},
+                      {field_name: "Visit Number ID", type: "String", field_code: "19.1"}}}
             }
           end
         end
