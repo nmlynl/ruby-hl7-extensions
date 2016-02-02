@@ -77,9 +77,9 @@ module Extensions
           def mappings
             {metadata: {segment_code: "msh", display_name: "Message Header"},
              fields: [{field_name: "Message Type", type: "String", field_code: "9.1",
-                       supported_values: Values::MSH::MESSAGE_TYPES},
+                       supported_values: Values::MSH::MESSAGE_TYPES.inject([]) {|arr, k| arr << {code: k[0], label: k[1]}; arr}},
                       {field_name: "Message Event", type: "String", field_code: "9.2", 
-                       supported_values: Values::MSH::EVENT_TYPES}]
+                       supported_values: Values::MSH::EVENT_TYPES.inject([]) {|arr, k| arr << {code: k[0], label: k[1]}; arr}}]
             }
           end
         end
