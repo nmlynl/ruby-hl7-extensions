@@ -35,14 +35,15 @@ module Extensions
             
             hash = super.to_hash
             
-            assignedLocation = self.hash["assignedLocation"].split("^") rescue Array.new(10) {|i| "" }
+            assignedLocation = self.hash["assignedLocation"].split("^") rescue Array.new(15) {|i| "" }
             hash["patientLocation"] =  {"pointOfCare" => assignedLocation[0],
                                         "room" => assignedLocation[1],
                                         "bed" => assignedLocation[2],
                                         "facility" => assignedLocation[3],
                                         "locationStatus" => assignedLocation[4],
                                         "personLocationType" => assignedLocation[5],
-                                        "building" => assignedLocation[06]}
+                                        "building" => assignedLocation[6],
+                                        "floor" => assignedLocation[7]}
             
             if self.hash["attendingDoctor"].blank? 
               hash["attendingProvider"] = {}
