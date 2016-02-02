@@ -30,8 +30,16 @@ module Extensions
           providers
         end
         
+        def message_type
+          msh = hash["message"]["content"]["MSH"]
+          @msh ||= ::HL7::Message::Segment.from_hash("MSH", msh)
+          @msh.to_hash["messageType"]["messageCode"]
+        end
+        
         def event
-          hash[:message][:content]["MSH"]["messageEvent"]
+          msh = hash["message"]["content"]["MSH"]
+          @msh ||= ::HL7::Message::Segment.from_hash("MSH", msh)
+          @msh.to_hash["messageType"]["triggerEvent"]
         end
         
         def sending_application
