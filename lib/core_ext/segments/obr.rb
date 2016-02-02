@@ -23,6 +23,8 @@ module Extensions
           end
   
           def to_hash
+            return @hash if @hash
+            
             universalServiceId = self.universal_service_id.split("^") rescue Array.new(10) {|i|""}
             collectionVolume = self.collection_volume.split("^") rescue Array.new(10) {|i|""}
             orderingProvider = self.ordering_provider.split("^") rescue Array.new(20) {|i|""}
