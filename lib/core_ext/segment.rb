@@ -32,9 +32,28 @@ module Extensions
         def handle_element(key)
           self.send(key)
         end
+        
+        def value_for_field(key)
+          index = key.split(".").first.to_i
+          index, subindex = key.split(".").collect {|i|i.to_i}
+          field = self.class.field(index)
+          if field
+            if subindex.blank?
+              return self.send(field[0].to_s)
+            else
+              return self.send(field[0].to_s).split(self.item_delim)[subindex-1]
+            end
+          end
+        end
       end
       
       module ClassMethods
+        def field(index)
+          fields.each do |field|
+            return field if field[1][:idx] == index
+          end
+        end
+        
         def from_hash(type, hash)
           clazz = eval("::HL7::Message::Segment::#{type}")
           instance = clazz.new

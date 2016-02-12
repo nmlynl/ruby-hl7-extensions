@@ -11,6 +11,14 @@ module Extensions
       module InstanceMethods
         def providers
           providers = []
+
+          if self[:ORC]
+            orcs = self[:ORC].is_a?(Array) ? self[:ORC] : [self[:ORC]]
+            orcs.each do |orc|
+              providers << {hash: orc.ordering_provider_hash, segment: orc}
+            end
+          end
+
         
           if self[:OBR]
             obrs = self[:OBR].is_a?(Array) ? self[:OBR] : [self[:OBR]]
@@ -21,12 +29,20 @@ module Extensions
         
           if self[:PV1]
             pv1 = self[:PV1]
-            providers << {hash: pv1.admitting_provider_hash, segment: self[:PV1]}
-            providers << {hash: pv1.attending_provider_hash, segment: self[:PV1]}
-            providers << {hash: pv1.consulting_provider_hash, segment: self[:PV1]}
-            providers << {hash: pv1.referring_provider_hash, segment: self[:PV1]}
+            providers << {hash: pv1.provider_hash("admitting","AD"), segment: self[:PV1]}
+            providers << {hash: pv1.provider_hash("attending","AT"), segment: self[:PV1]}
+            providers << {hash: pv1.provider_hash("consulting","CP"), segment: self[:PV1]}
+            providers << {hash: pv1.provider_hash("referring","RP"), segment: self[:PV1]}
           end
         
+          if self[:ROL]
+            roles = self[:ROL]
+            roles = [self[:ROL]] unless self[:ROL].is_a?Array
+            roles.each do |rol| 
+              providers << {hash: rol.person_hash, segment: rol}
+            end
+          end 
+            
           providers
         end
         
@@ -52,7 +68,7 @@ module Extensions
         end
 
         def patient_dob
-          Date.parse(hash["message"]["content"]["PID"]["dateTimeBirth"]).strftime("%B %d, %Y")
+          Date.parse(hash["message"]["content"]["PID"]["patientDob"]).strftime("%B %d, %Y")
         end
 
         def patient_mrn
@@ -87,6 +103,10 @@ module Extensions
         
         def hash 
           to_hash
+        end
+        
+        def segments_for(key)
+          self.select {|segment| segment.segment_name == key}
         end
         
         def to_hash

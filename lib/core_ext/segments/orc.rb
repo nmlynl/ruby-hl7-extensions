@@ -9,6 +9,10 @@ module Extensions
         end
 
         module InstanceMethods
+          def ordering_provider_hash
+            to_hash["orderingProvider"]
+          end
+          
           def obr_list
             a = to_hash["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
             a.to_enum(:each)            

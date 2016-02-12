@@ -15,3 +15,5 @@ segments.each do |segment_name|
   end")
 
 end
+
+require 'core_ext/segments/rol'

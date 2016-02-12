@@ -14,20 +14,12 @@ module Extensions
             to_hash["visit"]["id"]
           end
           
-          def admitting_provider_hash
-            to_hash["admittingProvider"].merge("providerType" => "AD")
-          end
-          
-          def attending_provider_hash
-            to_hash["attendingProvider"].merge("providerType" => "AT")
-          end
-          
-          def consulting_provider_hash
-            {"id" => to_hash["consultingDoctor"], "providerType" => "CP"}
-          end
-          
-          def referring_provider_hash
-            {"id" => to_hash["referringDoctor"], "providerType" => "RP"}
+          def provider_hash(provider_type, provider_code)
+            if to_hash["#{provider_type}Provider"]
+              to_hash["#{provider_type}Provider"].merge("providerType" => provider_code)
+            else
+              {}
+            end
           end
           
           def to_hash
@@ -85,6 +77,45 @@ module Extensions
                                            "assigningFacility" => admittingProvider[13]}
             end
             
+            if self.hash["referringDoctor"].blank?
+              hash["referringProvider"] = {}
+            else
+              referringProvider = self.hash["referringDoctor"].split("^") rescue Array.new(20) {|i|""}
+              hash["referringProvider"] = {"id" => referringProvider[0],
+                                           "lastName" => referringProvider[1],
+                                           "firstName" => referringProvider[2],
+                                           "middleInitOrName" => referringProvider[3],
+                                           "suffix" => referringProvider[4],
+                                           "prefix" => referringProvider[5],
+                                           "degree" => referringProvider[6],
+                                           "sourceTable" => referringProvider[7],
+                                           "assigningAuthority" => referringProvider[8],
+                                           "nameTypeCode" => referringProvider[9],
+                                           "identifierCheckDigit" => referringProvider[10],
+                                           "codeIdCheck" => referringProvider[11],
+                                           "identifierTypeCode" => referringProvider[12],
+                                           "assigningFacility" => referringProvider[13]}
+            end
+            
+            if self.hash["consultingDoctor"].blank?
+              hash["consultingProvider"] = {}
+            else
+              consultingProvider = self.hash["consultingDoctor"].split("^") rescue Array.new(20) {|i|""}
+              hash["consultingProvider"] = {"id" => consultingProvider[0],
+                                           "lastName" => consultingProvider[1],
+                                           "firstName" => consultingProvider[2],
+                                           "middleInitOrName" => consultingProvider[3],
+                                           "suffix" => consultingProvider[4],
+                                           "prefix" => consultingProvider[5],
+                                           "degree" => consultingProvider[6],
+                                           "sourceTable" => consultingProvider[7],
+                                           "assigningAuthority" => consultingProvider[8],
+                                           "nameTypeCode" => consultingProvider[9],
+                                           "identifierCheckDigit" => consultingProvider[10],
+                                           "codeIdCheck" => consultingProvider[11],
+                                           "identifierTypeCode" => consultingProvider[12],
+                                           "assigningFacility" => consultingProvider[13]}
+            end
             visitNumber = self.hash["visitNumber"].split("^") rescue Array.new(20) {|i|""}
             hash["visit"] = {"id" => visitNumber[0],
                              "checkDigit" => visitNumber[1],
@@ -92,8 +123,7 @@ module Extensions
                              "assigningAuthority" => visitNumber[3],
                              "idTypeCode" => visitNumber[4]}
 
-            
-            hash
+            @hash = hash
           end
         end
         
