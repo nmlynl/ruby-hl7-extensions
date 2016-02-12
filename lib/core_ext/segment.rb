@@ -17,6 +17,14 @@ module Extensions
         def segment_name
           self.class.to_s.split("::").last
         end
+
+        def format_date(attr)
+          Date.parse(self.send(attr)).strftime("%B %d, %Y")
+        end
+          
+        def format_datetime(attr)
+          Date.parse(self.send(attr)).strftime("%m/%d/%Y %l:%M")
+        end
   
         def to_hash
           @hash ||= {}
@@ -33,6 +41,14 @@ module Extensions
           self.send(key)
         end
         
+        def provider_hash(provider_type, provider_code)
+          if to_hash["#{provider_type}Provider"]
+            to_hash["#{provider_type}Provider"].merge("providerType" => provider_code)
+          else
+            {}
+          end
+        end
+        
         def value_for_field(key)
           index = key.split(".").first.to_i
           index, subindex = key.split(".").collect {|i|i.to_i}
@@ -41,7 +57,12 @@ module Extensions
             if subindex.blank?
               return self.send(field[0].to_s)
             else
-              return self.send(field[0].to_s).split(self.item_delim)[subindex-1]
+              field_val = self.send(field[0].to_s)
+              if field_val
+                return field_val.split(self.item_delim)[subindex-1]
+              else
+                return nil
+              end
             end
           end
         end
@@ -65,6 +86,15 @@ module Extensions
           end  
           instance
         end
+        
+        def mappings
+          field_mappings = self.fields.inject([]) {|arr, k| pp k; arr << {field_name: k[0].to_s.gsub("_", " ").titleize, type: "String", field_code: k[1][:idx]}; arr}
+          
+          {
+            metadata: {segment_code: self.to_s.downcase, display_name: ""},
+            fields: field_mappings
+          }
+        end
       end
             
     end
@@ -74,3 +104,10 @@ end
 class HL7::Message::Segment
   include Extensions::HL7::Segment
 end
+
+
+# HL7::Message::Segment::PV1.fields.inject([]) {|arr, k| pp k; arr << {field_name: k[0].to_s.gsub("_", " ").titleize, type: String, field_code: k[1][:idx]}; arr}
+#   pp field
+# end
+#
+# ::HL7::Types.enumeration.inject([]) {|arr, k| arr << {code: k[1][0], label: k[1][1]}; arr}}

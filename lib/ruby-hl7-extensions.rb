@@ -17,7 +17,6 @@
 #
 
 require 'ruby-hl7'
-require 'core_ext/values/msh'
 require 'core_ext/message'
 require 'core_ext/segment'
 require 'core_ext/segments/segments'

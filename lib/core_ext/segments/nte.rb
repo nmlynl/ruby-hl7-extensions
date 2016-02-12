@@ -10,9 +10,15 @@ module Extensions
         
         module InstanceMethods
           def to_hash
-            @hash = {"setId" => self.set_id,
-                     "source" => self.source,
-                     "body" => self.comment}
+            return @hash if @hash
+            
+            @hash = super.to_hash
+            
+            @hash.merge!({"setId" => self.set_id,
+                          "source" => self.source,
+                          "body" => self.comment})
+            
+            @hash
           end
         end
         

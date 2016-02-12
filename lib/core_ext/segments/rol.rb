@@ -18,6 +18,12 @@ class HL7::Message::Segment::ROL < HL7::Message::Segment
   add_field :provider_info
   add_field :phone
   
+  def to_hash
+    return @hash if @hash
+    @hash = super.to_hash
+    @hash
+  end
+  
   def person_hash
     person = self.role_person.split(self.item_delim) rescue Array.new(20) {|i|""}
     

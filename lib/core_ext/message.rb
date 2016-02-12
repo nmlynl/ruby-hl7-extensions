@@ -9,6 +9,10 @@ module Extensions
       end
 
       module InstanceMethods
+        def segments_for(key)
+          self.select {|segment| segment.segment_name == key.to_s}
+        end
+        
         def providers
           providers = []
 
@@ -18,7 +22,6 @@ module Extensions
               providers << {hash: orc.ordering_provider_hash, segment: orc}
             end
           end
-
         
           if self[:OBR]
             obrs = self[:OBR].is_a?(Array) ? self[:OBR] : [self[:OBR]]
@@ -46,67 +49,68 @@ module Extensions
           providers
         end
         
+        def msh
+          @msh ||= segments_for(:MSH).first
+        end
+        
         def message_type
-          msh = hash["message"]["content"]["MSH"]
-          @msh ||= ::HL7::Message::Segment.from_hash("MSH", msh)
-          @msh.to_hash["messageType"]["messageCode"]
+          msh.value_for_field("8.1")
         end
         
         def event
-          msh = hash["message"]["content"]["MSH"]
-          @msh ||= ::HL7::Message::Segment.from_hash("MSH", msh)
-          @msh.to_hash["messageType"]["triggerEvent"]
+          msh.value_for_field("8.2")
         end
         
         def sending_application
-          hash[:message][:content]["MSH"]["sendingApplication"] rescue nil
+          msh.value_for_field("3.1")
+        end
+        
+        def pid
+          @pid ||= segments_for(:PID).first
         end
         
         def patient_full_name
-          name = hash["message"]["content"]["PID"]["patientName"]
-          "#{name["lastName"]}, #{name["firstName"]}#{name["middleInitOrName"].blank? ? "" : " #{name["middleInitOrName"]}"}"
+          last_name = pid.value_for_field("5.1")
+          first_name = pid.value_for_field("5.2")
+          middle_initial_or_name = pid.value_for_field("5.3")
+
+          "#{last_name}, #{first_name}#{middle_initial_or_name.blank? ? "" : " #{middle_initial_or_name}"}"
         end
 
         def patient_dob
-          Date.parse(hash["message"]["content"]["PID"]["patientDob"]).strftime("%B %d, %Y")
+          Date.parse(pid.patient_dob).strftime("%B %d, %Y") if pid.patient_dob
         end
 
         def patient_mrn
-          pid = hash["message"]["content"]["PID"]
-          @pid ||= ::HL7::Message::Segment.from_hash("PID", pid)
-          @pid.mrn
+          pid.value_for_field("3.1")
         end
 
         def patient_gender
-          hash["message"]["content"]["PID"]["sex"]
+          pid.value_for_field("8")
+        end
+
+        def pv1
+          @pv1 ||= segments_for(:PV1).first
+        end
+        
+        def account_number
+          pv1.value_for_field("19.1")
         end
 
         def obr_list
+          # segments_for(:OBR).to_enum(:each)
           a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
           a.to_enum(:each)
         end
 
-        def patient
-          patient = hash["message"]["content"]["PID"]
-          ::HL7::Message::Segment.from_hash("PID", patient)
-        end
-
-        def patient_visit
-          patient_visit = hash["message"]["content"]["PV1"]
-          ::HL7::Message::Segment.from_hash("PV1", patient_visit)
-        end
-
         def orc_list
+          # segments_for(:OBR).to_enum(:each)
           a = hash["message"]["content"]["ORC"]["array"].collect {|orc| ::HL7::Message::Segment.from_hash("ORC", orc)}
           a.to_enum(:each)
         end
         
         def hash 
           to_hash
-        end
-        
-        def segments_for(key)
-          self.select {|segment| segment.segment_name == key}
         end
         
         def to_hash

@@ -14,14 +14,6 @@ module Extensions
             to_hash["visit"]["id"]
           end
           
-          def provider_hash(provider_type, provider_code)
-            if to_hash["#{provider_type}Provider"]
-              to_hash["#{provider_type}Provider"].merge("providerType" => provider_code)
-            else
-              {}
-            end
-          end
-          
           def to_hash
             return @hash if @hash
             
@@ -128,17 +120,17 @@ module Extensions
         end
         
         module ClassMethods
-          def mappings
-            {metadata: {segment_code: "pv1", display_name: "Patient Visit"},
-             fields: [{field_name: "Patient Class", type: "String", field_code: "2"},
-                      {field_name: "Point of Care", type: "String", field_code: "3.1"},
-                      {field_name: "Facility", type: "String", field_code: "3.4"},
-                      {field_name: "Floor", type: "String", field_code: "3.8"},
-                      {field_name: "Admission Type", type: "String", field_code: "4"},
-                      {field_name: "Preadmit Number ID", type: "String", field_code: "5.1"},
-                      {field_name: "Visit Number ID", type: "String", field_code: "19.1"}]
-            }
-          end
+          # def mappings
+          #   {metadata: {segment_code: "pv1", display_name: "Patient Visit"},
+          #    fields: [{field_name: "Patient Class", type: "String", field_code: "2"},
+          #             {field_name: "Point of Care", type: "String", field_code: "3.1"},
+          #             {field_name: "Facility", type: "String", field_code: "3.4"},
+          #             {field_name: "Floor", type: "String", field_code: "3.8"},
+          #             {field_name: "Admission Type", type: "String", field_code: "4"},
+          #             {field_name: "Preadmit Number ID", type: "String", field_code: "5.1"},
+          #             {field_name: "Visit Number ID", type: "String", field_code: "19.1"}]
+          #   }
+          # end
         end
         
       end
