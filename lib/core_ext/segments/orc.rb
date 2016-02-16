@@ -13,6 +13,10 @@ module Extensions
             to_hash["orderingProvider"]
           end
           
+          def order_control_text
+            OrderControl.t(self.order_control) rescue nil
+          end
+          
           def obr_list
             a = to_hash["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
             a.to_enum(:each)            
@@ -93,9 +97,61 @@ module Extensions
         end
         
         module ClassMethods
-          
         end
         
+        class OrderControl < EnumerateIt::Base
+          associate_values(NW: ['NW', 'New Order'],
+                           OK: ['OK', 'Order/service accepted & OK'],
+                           UA: ['UA', 'Unable to accept order/service'],
+                           UA: ['UA', 'Unable to accept order/service'],
+                           CA: ['CA', 'Canceled Order'],
+                           OC: ['OC', 'Canceled Order'],
+                           CR: ['CR', 'Canceled Order'],
+                           UC: ['UC', 'Unable to cancel'],
+                           DC: ['DC', 'Discontinue order/service request'],
+                           OD: ['OD', 'Order/service discontinued'],
+                           DR: ['DR', 'Discontinued as requested'],
+                           UD: ['UD', 'Unable to discontinue'],
+                           HD: ['HD', 'Hold order request'],
+                           OH: ['OH', 'Order/service held'],
+                           UH: ['UH', 'Unable to put on hold'],
+                           HR: ['HR', 'On hold as requested'],
+                           RL: ['RL', 'Release previous hold'],
+                           OE: ['OE', 'Order/service released'],
+                           OR: ['OR', 'Released as requested'],
+                           UR: ['UR', 'Unable to release'],
+                           RP: ['RP', 'Order/service replace request'],
+                           RU: ['RU', 'Replaced unsolicited'],
+                           RO: ['RO', 'Replacement order'],
+                           RQ: ['RQ', 'Replaced as requested'],
+                           UM: ['UM', 'Unable to replace'],
+                           PA: ['PA', 'Parent order/service'],
+                           CH: ['CH', 'Child order/service'],
+                           XO: ['XO', 'Change Order'],
+                           XX: ['XX', 'Change Order'],
+                           UX: ['UX', 'Unable to change'],
+                           XR: ['XR', 'Changed as requested'],
+                           DE: ['DE', 'Data errors'],
+                           RE: ['RE', 'Observations/Performed Service to follow'],
+                           RR: ['RR', 'Request received'],
+                           SR: ['SR', 'Response to send order/service status request'],
+                           SS: ['SS', 'Send order/service status request'],
+                           SC: ['SC', 'Status changed'],
+                           SN: ['SN', 'Send order/service number'],
+                           NA: ['NA', 'Number assigned'],
+                           CN: ['CN', 'Combined result'],
+                           RF: ['RF', 'Refill order/service request'],
+                           AF: ['AF', 'Order/service refill request approval'],
+                           DF: ['DF', 'Order/service refill request denied'],
+                           FU: ['FU', 'Order/service refilled, unsolicited'],
+                           OF: ['OF', 'Order/service refilled as requested'],
+                           UF: ['UF', 'Unable to refill'],
+                           LI: ['LI', 'Link order/service to patient care problem or goal'],
+                           UN: ['UN', 'Unlink order/service from patient care problem or goal'],
+                           OP: ['OP', 'Notification of order for outside dispense'],
+                           PY: ['PY', 'Notification of replacement order for outside dispense'])
+                           
+        end
       end
     end
   end

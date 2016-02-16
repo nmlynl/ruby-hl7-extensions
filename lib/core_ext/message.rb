@@ -48,9 +48,33 @@ module Extensions
             
           providers
         end
+
+        def evn
+          @evn ||= segments_for(:EVN).first
+        end
         
         def msh
           @msh ||= segments_for(:MSH).first
+        end
+        
+        def pid
+          @pid ||= segments_for(:PID).first
+        end
+        
+        def pv1
+          @pv1 ||= segments_for(:PV1).first
+        end
+        
+        def obr_list
+          # segments_for(:OBR).to_enum(:each)
+          a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
+          a.to_enum(:each)
+        end
+
+        def orc_list
+          # segments_for(:OBR).to_enum(:each)
+          a = hash["message"]["content"]["ORC"]["array"].collect {|orc| ::HL7::Message::Segment.from_hash("ORC", orc)}
+          a.to_enum(:each)
         end
         
         def message_type
@@ -65,50 +89,14 @@ module Extensions
           msh.value_for_field("3.1")
         end
         
-        def pid
-          @pid ||= segments_for(:PID).first
-        end
-        
-        def patient_full_name
-          last_name = pid.value_for_field("5.1")
-          first_name = pid.value_for_field("5.2")
-          middle_initial_or_name = pid.value_for_field("5.3")
-
-          "#{last_name}, #{first_name}#{middle_initial_or_name.blank? ? "" : " #{middle_initial_or_name}"}"
-        end
-
-        def patient_dob
-          Date.parse(pid.patient_dob).strftime("%B %d, %Y") if pid.patient_dob
-        end
-
         def patient_mrn
           pid.value_for_field("3.1")
         end
 
-        def patient_gender
-          pid.value_for_field("8")
-        end
-
-        def pv1
-          @pv1 ||= segments_for(:PV1).first
-        end
-        
         def account_number
           pv1.value_for_field("19.1")
         end
 
-        def obr_list
-          # segments_for(:OBR).to_enum(:each)
-          a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
-          a.to_enum(:each)
-        end
-
-        def orc_list
-          # segments_for(:OBR).to_enum(:each)
-          a = hash["message"]["content"]["ORC"]["array"].collect {|orc| ::HL7::Message::Segment.from_hash("ORC", orc)}
-          a.to_enum(:each)
-        end
-        
         def hash 
           to_hash
         end

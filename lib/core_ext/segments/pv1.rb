@@ -10,6 +10,24 @@ module Extensions
         
         module InstanceMethods
           
+          def assigned_location_str
+            location = self.assigned_location.split(self.item_delim)
+            point_of_care = location[0] rescue nil
+            room = location[1] rescue nil
+            bed = location[2] rescue nil
+            
+            "#{point_of_care}#{room.blank? ? "" : "-#{room}"}#{bed.blank? ? "" : "-#{bed}"}"
+          end
+
+          def prior_location_str
+            location = self.prior_location.split(self.item_delim)
+            point_of_care = location[0] rescue nil
+            room = location[1] rescue nil
+            bed = location[2] rescue nil
+            
+            "#{point_of_care}#{room.blank? ? "" : "-#{room}"}#{bed.blank? ? "" : "-#{bed}"}"
+          end
+          
           def account_number
             to_hash["visit"]["id"]
           end

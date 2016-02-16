@@ -9,12 +9,28 @@ module Extensions
         end
         
         module InstanceMethods
+          def patient_full_name
+            last_name = self.value_for_field("5.1")
+            first_name = self.value_for_field("5.2")
+            middle_initial_or_name = self.value_for_field("5.3")
+
+            "#{last_name}, #{first_name}#{middle_initial_or_name.blank? ? "" : " #{middle_initial_or_name}"}" rescue "n/a"
+          end
+          
+          def patient_initials
+            last_name = self.value_for_field("5.1")
+            first_name = self.value_for_field("5.2")
+            middle_initial_or_name = self.value_for_field("5.3")
+
+            "#{last_name[0]}, #{first_name[0]}" rescue "n/a"
+          end
+          
           def mrn 
             to_hash["internalId"]["id"]
           end
           
           def gender
-            to_hash["sex"]
+            self.value_for_field("8")
           end
           
           def to_hash
