@@ -18,12 +18,14 @@ module Extensions
           self.class.to_s.split("::").last
         end
 
-        def format_date(attr)
-          Date.parse(self.send(attr)).strftime("%B %d, %Y")
+        def format_date(attr, format = "%B %d, %Y")
+          date = self.send(attr)
+          Date.parse(date).strftime(format) if date
         end
           
-        def format_datetime(attr)
-          Date.parse(self.send(attr)).strftime("%m/%d/%Y %l:%M")
+        def format_datetime(attr, format = "%m/%d/%Y %l:%M")
+          datetime = self.send(attr)
+          Date.parse(datetime).strftime(format) if datetime
         end
   
         def to_hash
