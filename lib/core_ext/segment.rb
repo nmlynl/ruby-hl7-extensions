@@ -25,7 +25,7 @@ module Extensions
           
         def format_datetime(attr, format = "%m/%d/%Y %l:%M")
           datetime = self.send(attr)
-          Date.parse(datetime).strftime(format) if datetime
+          DateTime.parse(datetime).strftime(format) if datetime
         end
   
         def to_hash

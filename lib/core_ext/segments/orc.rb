@@ -103,7 +103,6 @@ module Extensions
           associate_values(NW: ['NW', 'New Order'],
                            OK: ['OK', 'Order/service accepted & OK'],
                            UA: ['UA', 'Unable to accept order/service'],
-                           UA: ['UA', 'Unable to accept order/service'],
                            CA: ['CA', 'Canceled Order'],
                            OC: ['OC', 'Canceled Order'],
                            CR: ['CR', 'Canceled Order'],
