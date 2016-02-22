@@ -23,7 +23,7 @@ module Extensions
           Date.parse(date).strftime(format) if date
         end
           
-        def format_datetime(attr, format = "%m/%d/%Y %l:%M")
+        def format_datetime(attr, format = "%m/%d/%Y %k:%M")
           datetime = self.send(attr)
           DateTime.parse(datetime).strftime(format) if datetime
         end
