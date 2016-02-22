@@ -28,10 +28,6 @@ module Extensions
             "#{point_of_care}#{room.blank? ? "" : "-#{room}"}#{bed.blank? ? "" : "-#{bed}"}"
           end
           
-          def account_number
-            to_hash["visit"]["id"]
-          end
-          
           def to_hash
             return @hash if @hash
             
