@@ -66,15 +66,15 @@ module Extensions
         end
         
         def obr_list
-          # segments_for(:OBR).to_enum(:each)
-          a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
-          a.to_enum(:each)
+          # a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
+          # a.to_enum(:each)
+          hash["message"]["content"]["OBR"]["segment_array"].to_enum(:each)
         end
 
         def orc_list
-          # segments_for(:OBR).to_enum(:each)
-          a = hash["message"]["content"]["ORC"]["array"].collect {|orc| ::HL7::Message::Segment.from_hash("ORC", orc)}
-          a.to_enum(:each)
+          # a = hash["message"]["content"]["ORC"]["array"].collect {|orc| ::HL7::Message::Segment.from_hash("ORC", orc)}
+          # a.to_enum(:each)
+          hash["message"]["content"]["ORC"]["segment_array"].to_enum(:each)          
         end
         
         def message_type
@@ -114,12 +114,15 @@ module Extensions
                 @hash[:message][:content][segment_name.to_sym] ||= {}
                 @hash[:message][:content][segment_name.to_sym]["array"] ||= []
                 @hash[:message][:content][segment_name.to_sym]["array"] << segment.to_hash
+                @hash[:message][:content][segment_name.to_sym]["segment_array"] ||= []
+                @hash[:message][:content][segment_name.to_sym]["segment_array"] << segment
 
-                @hash[:message][:content][segment_name.to_sym]["array"]
                 if last_segment == "ORC"
                   @hash[:message][:content]["ORC"]["array"].last["OBR"] ||= {}
                   @hash[:message][:content]["ORC"]["array"].last["OBR"]["array"] ||= []
                   @hash[:message][:content]["ORC"]["array"].last["OBR"]["array"] << segment.to_hash
+                  @hash[:message][:content]["ORC"]["array"].last["OBR"]["segment_array"] ||= []
+                  @hash[:message][:content]["ORC"]["array"].last["OBR"]["segment_array"] << segment                  
                 else
                   last_segment = segment_name
                 end
@@ -128,11 +131,15 @@ module Extensions
                   @hash[:message][:content]["OBR"]["array"].last[segment_name] ||= {}
                   @hash[:message][:content]["OBR"]["array"].last[segment_name]["array"] ||= []
                   @hash[:message][:content]["OBR"]["array"].last[segment_name]["array"] << segment.to_hash
+                  @hash[:message][:content]["OBR"]["array"].last[segment_name]["segment_array"] ||= []                  
+                  @hash[:message][:content]["OBR"]["array"].last[segment_name]["segment_array"] << segment                  
                 end
               elsif segment_name == "ORC"
                 @hash[:message][:content]["ORC"] ||= {}
                 @hash[:message][:content]["ORC"]["array"] ||= []
                 @hash[:message][:content]["ORC"]["array"] << segment.to_hash
+                @hash[:message][:content]["ORC"]["segment_array"] ||= []
+                @hash[:message][:content]["ORC"]["segment_array"] << segment                
                 last_segment = segment_name
               elsif segment_name == "NTE"
                 if last_segment == "OBR"

@@ -18,8 +18,9 @@ module Extensions
           end
           
           def obr_list
-            a = to_hash["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
-            a.to_enum(:each)            
+            # a = to_hash["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
+            # a.to_enum(:each)            
+            to_hash["OBR"]["segment_array"].to_enum(:each)
           end
           
           def to_hash

@@ -18,8 +18,9 @@ module Extensions
           end
   
           def obx_list
-            a = @hash["OBX"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBX", obr)}
-            a.to_enum(:each)
+            # a = @hash["OBX"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBX", obr)}
+            # a.to_enum(:each)
+            @hash["OBX"]["segment_array"].to_enum(:each)
           end
   
           def to_hash
