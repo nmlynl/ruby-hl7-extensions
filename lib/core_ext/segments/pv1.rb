@@ -134,17 +134,69 @@ module Extensions
         end
         
         module ClassMethods
-          # def mappings
-          #   {metadata: {segment_code: "pv1", display_name: "Patient Visit"},
-          #    fields: [{field_name: "Patient Class", type: "String", field_code: "2"},
-          #             {field_name: "Point of Care", type: "String", field_code: "3.1"},
-          #             {field_name: "Facility", type: "String", field_code: "3.4"},
-          #             {field_name: "Floor", type: "String", field_code: "3.8"},
-          #             {field_name: "Admission Type", type: "String", field_code: "4"},
-          #             {field_name: "Preadmit Number ID", type: "String", field_code: "5.1"},
-          #             {field_name: "Visit Number ID", type: "String", field_code: "19.1"}]
-          #   }
-          # end
+          def description
+            "Patient Visit"
+          end
+          
+          def field_description(field_index)
+            [
+              "Set Id - Pv1",
+              "Patient Class",
+              "Assigned Patient Location",
+              "Admission Type",
+              "Preadmit Number",
+              "Prior Patient Location",
+              "Attending Doctor",
+              "Referring Doctor",
+              "Consulting Doctor",
+              "Hospital Service",
+              "Temporary Location",
+              "Preadmit Test Indicator",
+              "Re-admission Indicator",
+              "Admit Source",
+              "Ambulatory Status",
+              "Vip Indicator",
+              "Admitting Doctor",
+              "Patient Type",
+              "Visit Number",
+              "Financial Class",
+              "Charge Price Indicator",
+              "Courtesy Code",
+              "Credit Rating",
+              "Contract Code",
+              "Contract Effective Date",
+              "Contract Amount",
+              "Contract Period",
+              "Interest Code",
+              "Transfer To Bad Debt Code",
+              "Transfer To Bad Debt Date",
+              "Bad Debt Agency Code",
+              "Bad Debt Transfer Amount",
+              "Bad Debt Recovery Amount",
+              "Delete Account Indicator",
+              "Delete Account Date",
+              "Discharge Disposition",
+              "Discharged To Location",
+              "Diet Type",
+              "Servicing Facility",
+              "Bed Status",
+              "Account Status",
+              "Pending Location",
+              "Prior Temporary Location",
+              "Admit Date/Time",
+              "Discharge Date/Time",
+              "Current Patient Balance",
+              "Total Charges",
+              "Total Adjustments",
+              "Total Payments",
+              "Alternate Visit Id",
+              "Visit Indicator",
+              "Other Healthcare Provider",
+              "Service Episode Description",
+              "Service Episode Identifier",
+            ][field_index-1]
+          end
+          
         end
         
       end

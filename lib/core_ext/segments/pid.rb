@@ -9,6 +9,7 @@ module Extensions
         end
         
         module InstanceMethods
+          
           def patient_full_name
             last_name = self.value_for_field("5.1")
             first_name = self.value_for_field("5.2")
@@ -59,6 +60,59 @@ module Extensions
         end
         
         module ClassMethods
+          def is_required?
+            true
+          end
+          
+          def description
+            "Patient Identification"
+          end
+          
+          def field_description(field_index)
+            [
+              "Set Id - Pid",
+              "Patient Id",
+              "Patient Identifier List",
+              "Alternate Patient Id - Pid",
+              "Patient Name",
+              "Mother's Maiden Name",
+              "Date/Time Of Birth",
+              "Administrative Sex",
+              "Patient Alias",
+              "Race",
+              "Patient Address",
+              "County Code",
+              "Phone Number - Home",
+              "Phone Number - Business",
+              "Primary Language",
+              "Marital Status",
+              "Religion",
+              "Patient Account Number",
+              "Ssn Number - Patient",
+              "Driver's License Number - Patient",
+              "Mother's Identifier",
+              "Ethnic Group",
+              "Birth Place",
+              "Multiple Birth Indicator",
+              "Birth Order",
+              "Citizenship",
+              "Veterans Military Status",
+              "Nationality",
+              "Patient Death Date And Time",
+              "Patient Death Indicator",
+              "Identity Unknown Indicator",
+              "Identity Reliability Code",
+              "Last Update Date/Time",
+              "Last Update Facility",
+              "Species Code",
+              "Breed Code",
+              "Strain",
+              "Production Class Code",
+              "Tribal Citizenship",
+              "Patient Telecommunication Information"
+            ][field_index-1]
+          end
+          
         end
         
       end

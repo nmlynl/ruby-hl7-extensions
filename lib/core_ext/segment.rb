@@ -89,11 +89,32 @@ module Extensions
           instance
         end
         
+        def description
+          ""
+        end
+        
+        def field_description(field_index)
+          ""
+        end
+
+        def is_required?
+          false
+        end
+        
+        def index_for(field_name)
+          index = self.fields.collect {|field| field[0]}.index(field_name) rescue -1
+          if index < 0
+            return -1
+          else
+            return index + 1 
+          end
+        end
+        
         def mappings
           field_mappings = self.fields.inject([]) {|arr, k| arr << {field_name: k[0].to_s.gsub("_", " ").titleize, type: "String", field_code: k[1][:idx]}; arr}
           
           {
-            metadata: {segment_code: self.to_s.downcase, display_name: ""},
+            metadata: {segment_code: self.to_s.split("::").last, display_name: ""},
             fields: field_mappings
           }
         end

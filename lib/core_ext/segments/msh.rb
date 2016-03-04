@@ -9,6 +9,7 @@ module Extensions
         end
         
         module InstanceMethods
+          
           def to_hash
             return @hash if @hash
             
@@ -75,6 +76,40 @@ module Extensions
         end
         
         module ClassMethods
+          def is_required?
+            true
+          end
+          
+          def description
+            "Message Header"
+          end
+          
+          def field_description(field_index)
+            ["Encoding Characters",
+             "Sending Application",
+             "Sending Facility",
+             "Receiving Application",
+             "Receiving Facility",
+             "Date/Time Of Message",
+             "Security",
+             "Message Type",
+             "Message Control Id",
+             "Processing Id",
+             "Version Id",
+             "Sequence Number",
+             "Continuation Pointer",
+             "Accept Acknowledgment Type",
+             "Application Acknowledgment Type",
+             "Country Code",
+             "Character Set",
+             "Principal Language Of Message",
+             "Alternate Character Set Handling Scheme",
+             "Message Profile Identifier",
+             "Sending Responsible Organization",
+             "Receiving Responsible Organization",
+             "Sending Network Address",
+             "Receiving Network Address"][field_index-1]            
+          end
         end
         
       end

@@ -7,8 +7,10 @@ require 'core_ext/segments/nte'
 require 'core_ext/segments/nk1'
 require 'core_ext/segments/pv1'
 require 'core_ext/segments/evn'
+require 'core_ext/segments/sft'
+require 'core_ext/segments/err'
 
-segments = ["MSH","PID","ORC","OBR","OBX","NTE","NK1", "PV1", "EVN"]
+segments = ["MSH","PID","ORC","OBR","OBX","NTE","NK1", "PV1", "EVN", "SFT", "ERR"]
 segments.each do |segment_name|
 
   eval("class HL7::Message::Segment::#{segment_name} < HL7::Message::Segment

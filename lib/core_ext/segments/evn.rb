@@ -15,6 +15,21 @@ module Extensions
         end
         
         module ClassMethods
+          def description
+            "Event Type"
+          end
+          
+          def field_description(field_index)
+            [
+              "Event Type Code",
+              "Recorded Date/Time",
+              "Date/Time Planned Event",
+              "Event Reason Code",
+              "Operator Id",
+              "Event Occurred",
+              "Event Facility"
+              ][field_index-1]
+          end
         end
         
       end
