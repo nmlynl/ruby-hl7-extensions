@@ -32,10 +32,13 @@ module Extensions
         
           if self[:PV1]
             pv1 = self[:PV1]
-            providers << {hash: pv1.provider_hash("admitting","AD"), segment: self[:PV1]}
-            providers << {hash: pv1.provider_hash("attending","AT"), segment: self[:PV1]}
-            providers << {hash: pv1.provider_hash("consulting","CP"), segment: self[:PV1]}
-            providers << {hash: pv1.provider_hash("referring","RP"), segment: self[:PV1]}
+            pv1 = [pv1] unless pv1.is_a?Array
+            pv1.each do |pv|
+              providers << {hash: pv.provider_hash("admitting","AD"), segment: pv}
+              providers << {hash: pv.provider_hash("attending","AT"), segment: pv}
+              providers << {hash: pv.provider_hash("consulting","CP"), segment: pv}
+              providers << {hash: pv.provider_hash("referring","RP"), segment: pv}
+            end
           end
         
           if self[:ROL]
