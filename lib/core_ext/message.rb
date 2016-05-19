@@ -48,7 +48,15 @@ module Extensions
               providers << {hash: rol.person_hash, segment: rol}
             end
           end 
-            
+          
+          if self[:PD1]
+            pd1 = self[:PD1]
+            pd1 = [pd1] unless pd1.is_a?Array
+            pd1.each do |pd|
+              providers << {hash: pd.provider_hash("primaryCare","PP"), segment: pd}
+            end
+          end
+          
           providers
         end
 
