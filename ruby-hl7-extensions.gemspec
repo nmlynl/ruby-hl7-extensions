@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["LICENSE", "README.md"]
   s.files = [".gitignore", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "Rakefile", "VERSION", "VERSION.yml", "lib/core_ext/segments/rol.rb",
              "lib/core_ext/message.rb", "lib/core_ext/segment.rb", "lib/core_ext/segments/err.rb", "lib/core_ext/segments/sft.rb",
-             "lib/core_ext/segments/msh.rb", "lib/core_ext/segments/nk1.rb", "lib/core_ext/segments/orc.rb", "lib/core_ext/segments/evn.rb", "lib/core_ext/segments/nte.rb", "lib/core_ext/segments/obr.rb", "lib/core_ext/segments/obx.rb", "lib/core_ext/segments/pid.rb", "lib/core_ext/segments/pv1.rb", "lib/core_ext/segments/segments.rb",
+             "lib/core_ext/segments/msh.rb", "lib/core_ext/segments/nk1.rb", "lib/core_ext/segments/orc.rb", "lib/core_ext/segments/evn.rb", "lib/core_ext/segments/nte.rb", "lib/core_ext/segments/obr.rb", "lib/core_ext/segments/obx.rb", "lib/core_ext/segments/pid.rb", "lib/core_ext/segments/pv1.rb", "lib/core_ext/segments/pd1.rb", "lib/core_ext/segments/segments.rb",
              "lib/ruby-hl7-extensions.rb", "ruby-hl7-extensions.gemspec"]
   s.homepage = "http://github.com/nmlynl/ruby-hl7-extensions"
   s.rdoc_options = ["--charset=UTF-8"]
