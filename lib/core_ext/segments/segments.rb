@@ -20,3 +20,4 @@ segments.each do |segment_name|
 end
 
 require 'core_ext/segments/rol'
+require 'core_ext/segments/pd1'
