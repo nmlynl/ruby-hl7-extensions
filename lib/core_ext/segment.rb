@@ -20,12 +20,20 @@ module Extensions
 
         def format_date(attr, format = "%B %d, %Y")
           date = self.send(attr)
-          Date.parse(date).strftime(format) if date
+          if date.blank?
+            return nil
+          else
+            Date.parse(date).strftime(format)
+          end
         end
           
         def format_datetime(attr, format = "%m/%d/%Y %k:%M")
           datetime = self.send(attr)
-          DateTime.parse(datetime).strftime(format) if datetime
+          if datetime.blank?
+            return nil
+          else 
+            DateTime.parse(datetime).strftime(format)
+          end
         end
   
         def to_hash
