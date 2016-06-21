@@ -59,6 +59,26 @@ module Extensions
           
           providers
         end
+        
+        def notes
+          notes_str = ""
+          
+          if self[:NTE]
+            notes = self[:NTE]
+            notes = [notes] unless notes.is_a?Array
+            notes.each do |nte|
+              note = nte.value_for_field("3")
+              if note.include?"^"
+                notes_str << "#{nte.value_for_field("3.2")}: #{nte.value_for_field("3.4")}"
+              else
+                notes_str << note
+              end
+              notes_str << "\n"
+            end
+          end
+          
+          notes_str
+        end
 
         def evn
           @evn ||= segments_for(:EVN).first
