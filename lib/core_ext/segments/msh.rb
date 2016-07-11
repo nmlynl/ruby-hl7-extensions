@@ -73,6 +73,24 @@ module Extensions
                          "receiving_network_address" => self.receiving_network_address})
             @hash                      
           end
+          
+          def value_for_field(key)
+            index = key.split(".").first.to_i
+            index, subindex = key.split(".").collect {|i|i.to_i}
+            field = self.class.field(index-1)
+            if field
+              if subindex.blank?
+                return self.send(field[0].to_s)
+              else
+                field_val = self.send(field[0].to_s)
+                if field_val
+                  return field_val.split(self.item_delim)[subindex-1]
+                else
+                  return nil
+                end
+              end
+            end
+          end
         end
         
         module ClassMethods

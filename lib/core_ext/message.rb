@@ -109,11 +109,11 @@ module Extensions
         end
         
         def message_type
-          msh.value_for_field("8.1")
+          msh.value_for_field("9.1")
         end
         
         def event
-          msh.value_for_field("8.2")
+          msh.value_for_field("9.2")
         end
         
         def sending_application
