@@ -59,3 +59,24 @@ class HL7::Message::Segment::PD1 < HL7::Message::Segment
   end
 
 end
+
+module Extensions
+  module HL7
+    module Segments
+      module PD1
+        
+        def self.included base
+          base.send :include, InstanceMethods
+          base.extend ClassMethods
+        end
+        
+        module InstanceMethods
+        end
+        
+        module ClassMethods
+        end
+        
+      end
+    end
+  end
+end

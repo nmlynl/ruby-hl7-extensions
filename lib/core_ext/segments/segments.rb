@@ -9,8 +9,10 @@ require 'core_ext/segments/pv1'
 require 'core_ext/segments/evn'
 require 'core_ext/segments/sft'
 require 'core_ext/segments/err'
+require 'core_ext/segments/rol'
+require 'core_ext/segments/pd1'
 
-segments = ["MSH","PID","ORC","OBR","OBX","NTE","NK1", "PV1", "EVN", "SFT", "ERR"]
+segments = ["MSH","PID","ORC","OBR","OBX","NTE","NK1", "PV1", "EVN", "SFT", "ERR", "PD1", "ROL"]
 segments.each do |segment_name|
 
   eval("class HL7::Message::Segment::#{segment_name} < HL7::Message::Segment
@@ -18,6 +20,3 @@ segments.each do |segment_name|
   end")
 
 end
-
-require 'core_ext/segments/rol'
-require 'core_ext/segments/pd1'

@@ -120,7 +120,6 @@ module Extensions
         
         def mappings
           field_mappings = self.fields.inject([]) {|arr, k| arr << {field_name: k[0].to_s.gsub("_", " ").titleize, type: "String", field_code: k[1][:idx]}; arr}
-          
           {
             metadata: {segment_code: self.to_s.split("::").last, display_name: ""},
             fields: field_mappings
