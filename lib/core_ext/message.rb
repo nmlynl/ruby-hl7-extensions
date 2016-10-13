@@ -68,13 +68,16 @@ module Extensions
             notes = [notes] unless notes.is_a?Array
             notes.each do |nte|
               note = nte.value_for_field("3")
-              if note.include?"^"
-                notes_str << "#{nte.value_for_field("3.2")}: #{nte.value_for_field("3.4")}"
+              if note
+                if note.include?"^"
+                  notes_str << "#{nte.value_for_field("3.2")}: #{nte.value_for_field("3.4")}"
+                else
+                  notes_str << note
+                end
               else
-                notes_str << note
               end
               notes_str << "\n"
-            end
+            end            
           end
           
           notes_str
