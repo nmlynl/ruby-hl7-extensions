@@ -17,6 +17,10 @@ module Extensions
             OrderControl.t(self.order_control) rescue nil
           end
           
+          def ordering_provider_name
+            "#{to_hash["orderingProvider"]["lastName"]}, #{@hash["orderingProvider"]["firstName"]}#{@hash["orderingProvider"]["middleInitOrName"].blank? ? "" : " #{@hash["orderingProvider"]["middleInitOrName"]}"}"
+          end
+          
           def obr_list
             # a = to_hash["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
             # a.to_enum(:each)            
