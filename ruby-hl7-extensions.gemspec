@@ -3,12 +3,12 @@
 
 Gem::Specification.new do |s|
   s.name = "ruby-hl7-extensions"
-  s.version = "0.0.83"
+  s.version = "0.0.84"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Nick Lega"]
-  s.date = "2014-09-09"
+  s.date = "2016-11-11"
   s.description = "A simple library to parse and generate HL7 2.x json"
   s.email = "ruby-hl7-json@googlegroups.com"
   s.extra_rdoc_files = ["LICENSE", "README.md"]

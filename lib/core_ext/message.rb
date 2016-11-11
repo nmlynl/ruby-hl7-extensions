@@ -67,7 +67,7 @@ module Extensions
             notes = self[:NTE]
             notes = [notes] unless notes.is_a?Array
             notes.each do |nte|
-              note = nte.value_for_field("3").gsub("\n","")
+              note = nte.value_for_field("3").gsub("\n","") rescue nil
               if note
                 if note.include?"^"
                   notes_str << "#{nte.value_for_field("3.2")}: #{nte.value_for_field("3.4")}"
