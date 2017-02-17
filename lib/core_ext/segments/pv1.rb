@@ -28,6 +28,16 @@ module Extensions
             "#{point_of_care}#{room.blank? ? "" : "-#{room}"}#{bed.blank? ? "" : "-#{bed}"}"
           end
           
+          def consulting_provider
+            fname = self.value_for_field("9.3")
+            lname = self.value_for_field("9.2")
+            if fname and lname
+              "#{lname}, #{fname}"
+            else
+              ""
+            end
+          end
+          
           def to_hash
             return @hash if @hash
             

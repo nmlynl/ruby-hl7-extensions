@@ -60,21 +60,23 @@ module Extensions
         end
         
         def value_for_field(key)
+          key = key.to_s
           index = key.split(".").first.to_i
           index, subindex = key.split(".").collect {|i|i.to_i}
           field = self.class.field(index)
+          retval= nil
           if field
             if subindex.blank?
-              return self.send(field[0].to_s)
+              retval = self.send(field[0].to_s)
             else
               field_val = self.send(field[0].to_s)
               if field_val
-                return field_val.split(self.item_delim)[subindex-1]
-              else
-                return nil
+                retval = field_val.split(self.item_delim)[subindex-1]
               end
             end
           end
+          retval = retval.strip  unless retval.blank?
+          retval
         end
       end
       

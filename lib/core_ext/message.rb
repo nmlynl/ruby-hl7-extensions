@@ -99,6 +99,14 @@ module Extensions
           @pv1 ||= segments_for(:PV1).first
         end
         
+        def in1
+          @in1 ||= segments_for(:IN1).first
+        end
+        
+        def dg1
+          @dg1 ||= segments_for(:DG1).first
+        end
+        
         def obr_list
           # a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
           # a.to_enum(:each)
