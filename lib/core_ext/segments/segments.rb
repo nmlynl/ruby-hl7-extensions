@@ -12,6 +12,7 @@ require 'core_ext/segments/err'
 require 'core_ext/segments/rol'
 require 'core_ext/segments/pd1'
 require 'segments/dg1'
+require 'segments/znp'
 require 'core_ext/segments/dg1'
 require 'core_ext/segments/in1'
 

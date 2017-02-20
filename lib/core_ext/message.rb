@@ -57,6 +57,14 @@ module Extensions
             end
           end
           
+          if self[:ZNP]
+            znp = self[:ZNP]
+            znp = [znp] unless znp.is_a?Array
+            znp.each do |z|
+              providers << {hash: z.provider_hash("znpProvider","ZNP"), segment: z}
+            end
+          end
+          
           providers
         end
         
