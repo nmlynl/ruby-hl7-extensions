@@ -10,6 +10,48 @@ module Extensions
         
         module InstanceMethods
           
+          def discharge_disposition_str
+            retval = self.value_for_field("36") rescue ""
+            case retval
+            when "01","1",1
+              retval = "Discharged to home or self care (routine discharge)"
+            when "02","2",2
+              retval = "Discharged/transferred to another short term general hospital for inpatient care"
+            when "03","3",3
+              retval = "Discharged/transferred to skilled nursing facility (SNF)"
+            when "04","4",4
+              retval = "Discharged/transferred to an intermediate care facility (ICF)"
+            when "05","5",5
+              retval = "Discharged/transferred to another type of institution for inpatient care or referred for outpatient services to another institution"
+            when "06","6",6
+              retval = "Discharged/transferred to home under care of organized home health service organization"
+            when "07","7",7
+              retval = "Left against medical advice or discontinued care"
+            when "08","8",8
+              retval = "Discharged/transferred to home under care of Home IV provider"
+            when "09","9",9
+              retval = "Admitted as an inpatient to this hospital"
+            when "10","11","12","13","14","15","16","17","18","19","010","011","012","013","014","015","016","017","018","019",10,11,12,13,14,15,16,17,18,19
+              retval = "Discharge to be defined at state level, if necessary"
+            when "20","020",20
+              retval = "Expired (i.e. dead)"
+            when "21","22","23","24","25","26","27","28","29","021","022","023","024","025","026","027","028","029",21,22,23,24,25,26,27,28,29
+              retval = "Expired to be defined at state level, if necessary"
+            when "30","030",30
+              retval = "Still patient or expected to return for outpatient services (i.e. still a patient)"
+            when "31","32","33","34","35","36","37","38","39","031","032","033","034","035","036","037","038","039",31,32,33,34,35,36,37,38,39
+              retval = "Still patient to be defined at state level, if necessary  (i.e. still a patient)"
+            when "40","040",40
+              retval = "Expired (i.e. died) at home"
+            when "41","041",41
+              retval = "Expired (i.e. died) in a medical facility; e.g., hospital, SNF, ICF, or free standing hospice"
+            when "42","042",42
+              retval = "Expired (i.e. died)  - place unknown"
+            end
+            
+            retval
+          end
+          
           def assigned_location_str
             location = self.assigned_location.split(self.item_delim)
             point_of_care = location[0] rescue nil

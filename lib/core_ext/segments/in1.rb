@@ -25,8 +25,12 @@ module Extensions
           end
           
           def insured_address
-            address1, address2, city, state, zip = self.value_for_field("19").split(@item_delim)
-            "#{address1}#{address2.blank? ? "," : ", #{address2},"} #{city}, #{state}, #{zip}"
+            if self.value_for_field("19")
+              address1, address2, city, state, zip = self.value_for_field("19").split(@item_delim) 
+              "#{address1}#{address2.blank? ? "," : ", #{address2},"} #{city}, #{state}, #{zip}"
+            else
+              ""
+            end
           end
         end
       end
