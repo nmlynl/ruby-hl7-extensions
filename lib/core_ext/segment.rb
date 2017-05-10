@@ -52,7 +52,7 @@ module Extensions
         end
         
         def provider_hash(provider_type, provider_code)
-          if to_hash["#{provider_type}Provider"]
+          if to_hash["#{provider_type}Provider"] and !to_hash["#{provider_type}Provider"].empty?
             to_hash["#{provider_type}Provider"].merge("providerType" => provider_code)
           else
             {}

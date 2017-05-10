@@ -65,7 +65,7 @@ module Extensions
             end
           end
           
-          providers
+          providers.inject([]) {|a,provider| a << provider unless provider[:hash].empty?; a}
         end
         
         def notes

@@ -21,7 +21,11 @@ module Extensions
             lname = self.value_for_field("16.1")
             fname = self.value_for_field("16.2")
             middle = self.value_for_field("16.3")
-            "#{lname}, #{fname} #{middle}"
+            if !lname.blank? and !fname.blank?
+              "#{lname}, #{fname} #{middle}"
+            elsif !lname.blank?
+              lname
+            end
           end
           
           def insured_address
