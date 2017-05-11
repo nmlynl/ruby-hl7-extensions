@@ -41,7 +41,9 @@ class HL7::Message::Segment::ROL < HL7::Message::Segment
      "codeIdCheck" => person[11],
      "identifierTypeCode" => person[12],
      "assigningFacility" => person[13],
-     "providerType" => self.role}
+     "providerType" => self.role,
+     "actionCode" => self.action_code
+   }
   end
   
 end
