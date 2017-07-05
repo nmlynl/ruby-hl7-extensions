@@ -38,6 +38,7 @@ module Extensions
               providers << {hash: pv.provider_hash("attending","AT"), segment: pv}
               providers << {hash: pv.provider_hash("consulting","CP"), segment: pv}
               providers << {hash: pv.provider_hash("referring","RP"), segment: pv}
+              providers << {hash: pv.provider_hash("other","OTHER"), segment: pv}
             end
           end
         

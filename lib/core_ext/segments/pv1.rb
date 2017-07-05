@@ -174,6 +174,27 @@ module Extensions
                                            "identifierTypeCode" => consultingProvider[12],
                                            "assigningFacility" => consultingProvider[13]}
             end
+            
+            if self.hash["otherHealthcareProvider"].blank?
+              hash["otherHealthcareProvider"] = {}
+            else
+              otherHealthcareProvider = self.hash["otherHealthcareProvider"].split("^") rescue Array.new(20) {|i|""}
+              hash["otherHealthcareProvider"] = {"id" => otherHealthcareProvider[0],
+                                                 "lastName" => otherHealthcareProvider[1],
+                                                 "firstName" => otherHealthcareProvider[2],
+                                                 "middleInitOrName" => otherHealthcareProvider[3],
+                                                 "suffix" => otherHealthcareProvider[4],
+                                                 "prefix" => otherHealthcareProvider[5],
+                                                 "degree" => otherHealthcareProvider[6],
+                                                 "sourceTable" => otherHealthcareProvider[7],
+                                                 "assigningAuthority" => otherHealthcareProvider[8],
+                                                 "nameTypeCode" => otherHealthcareProvider[9],
+                                                 "identifierCheckDigit" => otherHealthcareProvider[10],
+                                                 "codeIdCheck" => otherHealthcareProvider[11],
+                                                 "identifierTypeCode" => otherHealthcareProvider[12],
+                                                 "assigningFacility" => otherHealthcareProvider[13]}
+            end
+            
             visitNumber = self.hash["visitNumber"].split("^") rescue Array.new(20) {|i|""}
             hash["visit"] = {"id" => visitNumber[0],
                              "checkDigit" => visitNumber[1],
