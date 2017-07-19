@@ -13,6 +13,15 @@ module Extensions
           self.select {|segment| segment.segment_name == key.to_s}
         end
         
+        def reason_for_visit(add_newline = true)
+          retval = ""
+          if pv2
+            retval << (add_newline ? "\n" : "")
+            retval << "Reason for Visit: #{@pv2.admit_reason}"
+          end
+          retval
+        end
+        
         def providers
           providers = []
 
@@ -65,8 +74,11 @@ module Extensions
               providers << {hash: z.provider_hash("znpProvider","ZNP"), segment: z}
             end
           end
-          
-          providers.inject([]) {|a,provider| a << provider unless provider[:hash].empty?; a}
+
+          retval = []
+          providers.inject(retval) {|a,provider| a << provider unless provider[:hash].empty?; a}
+          retval.uniq! {|provider| provider[:hash]["id"]}
+          retval
         end
         
         def notes
@@ -106,6 +118,10 @@ module Extensions
         
         def pv1
           @pv1 ||= segments_for(:PV1).first
+        end
+        
+        def pv2
+          @pv2 ||= segments_for(:PV2).first
         end
         
         def in1

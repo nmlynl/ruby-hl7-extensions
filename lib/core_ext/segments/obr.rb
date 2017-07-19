@@ -14,7 +14,7 @@ module Extensions
           end
           
           def ordering_provider_name
-            "#{@hash["orderingProvider"][0]["lastName"]}, #{@hash["orderingProvider"][0]["firstName"]}#{@hash["orderingProvider"][0]["middleInitOrName"].blank? ? "" : " #{@hash["orderingProvider"][0]["middleInitOrName"]}"}"
+            "#{@hash["orderingProvider"]["lastName"]}, #{@hash["orderingProvider"]["firstName"]}#{@hash["orderingProvider"]["middleInitOrName"].blank? ? "" : " #{@hash["orderingProvider"]["middleInitOrName"]}"}"
           end
   
           def obx_list
@@ -54,7 +54,7 @@ module Extensions
                          "relevantClinicalInfo" => self.relevant_clinical_info,
                          "specimenReceivedDateTime" => self.specimen_received_date,
                          "specimenSource" => self.specimen_source,
-                         "orderingProvider" => [
+                         "orderingProvider" => 
                               {
                                 "id" => orderingProvider[0],
                                 "lastName" => orderingProvider[1],
@@ -72,8 +72,7 @@ module Extensions
                                 "isTypeCode" => orderingProvider[13],
                                 "assigningFacility" => orderingProvider[14],
                                 "providerType" => "OP"
-                              }
-                            ],
+                              },
                           "orderCallBackNumber" => self.order_callback_phone_number,
                           "placerField1" => self.placer_field_1,
                           "placerField2" => self.placer_field_2,
