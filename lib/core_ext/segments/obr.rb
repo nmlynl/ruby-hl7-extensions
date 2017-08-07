@@ -14,7 +14,12 @@ module Extensions
           end
           
           def ordering_provider_name
-            "#{@hash["orderingProvider"]["lastName"]}, #{@hash["orderingProvider"]["firstName"]}#{@hash["orderingProvider"]["middleInitOrName"].blank? ? "" : " #{@hash["orderingProvider"]["middleInitOrName"]}"}"
+            last_name = to_hash["orderingProvider"]["lastName"]
+            if last_name
+              "#{@hash["orderingProvider"]["lastName"]}, #{@hash["orderingProvider"]["firstName"]}#{@hash["orderingProvider"]["middleInitOrName"].blank? ? "" : " #{@hash["orderingProvider"]["middleInitOrName"]}"}"
+            else
+              nil
+            end
           end
   
           def obx_list
