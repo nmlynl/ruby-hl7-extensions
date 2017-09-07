@@ -77,7 +77,6 @@ module Extensions
 
           retval = []
           providers.inject(retval) {|a,provider| a << provider unless provider[:hash].empty?; a}
-          retval.uniq! {|provider| provider[:hash]["id"]}
           retval
         end
         
