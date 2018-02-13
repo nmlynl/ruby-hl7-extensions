@@ -27,7 +27,7 @@ module Extensions
           end
           
           def mrn 
-            to_hash["internalId"]["id"]
+            to_hash["internalId"]["id"] || to_hash["pid.2"]["id"]
           end
           
           def gender
@@ -40,9 +40,13 @@ module Extensions
             patient_name = self.patient_name.split("^") rescue Array.new(10) {|i| "" }
             address = self.address.split("^") rescue Array.new(10) {|i| "" }
             patientAccountNumber = self.account_number.split("^") rescue Array.new(10) {|i| "" }
+            pid2 = self.patient_id.split("^") rescue Array.new(10) {|i| "" }
             internalId = self.patient_id_list.split("^") rescue Array.new(10) {|i| "" }
 
             @hash = super.to_hash
+
+            @hash["pid.2"] = {"id" => pid2[0], "check_digit" => pid2[1], "check_digit_scheme" => pid2[2],
+                                   "assigning_authority" => pid2[3], "type" => pid2[4], "assigning_facility" => pid2[5]}
 
             @hash["internalId"] = {"id" => internalId[0], "check_digit" => internalId[1], "check_digit_scheme" => internalId[2],
                                    "assigning_authority" => internalId[3], "type" => internalId[4], "assigning_facility" => internalId[5]}
