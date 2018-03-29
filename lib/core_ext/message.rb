@@ -130,6 +130,10 @@ module Extensions
         def dg1
           @dg1 ||= segments_for(:DG1).first
         end
+
+        def mrg
+          @mrg ||= segments_for(:MRG).first
+        end
         
         def obr_list
           # a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}

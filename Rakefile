@@ -25,7 +25,7 @@ task :default => :spec
 spec = Gem::Specification.new do |s|
   s.name = short_name
   s.full_name
-  s.version = "0.0.1"
+  s.version = "0.3.2"
   s.author = "Nick Lega"
   s.email = "ruby-hl7@googlegroups.com"
   s.homepage = "https://github.com/nmlynl/ruby-hl7-extensions"
