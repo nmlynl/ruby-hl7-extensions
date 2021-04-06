@@ -122,7 +122,11 @@ module Extensions
         def pv2
           @pv2 ||= segments_for(:PV2).first
         end
-        
+
+        def pd1
+          @pd1 ||= segments_for(:PD1).first
+        end
+
         def in1
           @in1 ||= segments_for(:IN1).first
         end
@@ -134,7 +138,11 @@ module Extensions
         def mrg
           @mrg ||= segments_for(:MRG).first
         end
-        
+
+        def drf
+          @drf ||= segments_for(:DRF).first
+        end
+
         def obr_list
           # a = hash["message"]["content"]["OBR"]["array"].collect {|obr| ::HL7::Message::Segment.from_hash("OBR", obr)}
           # a.to_enum(:each)
@@ -220,6 +228,8 @@ module Extensions
                     @hash[:message][:content]["OBR"]["array"].last["OBX"]["array"].last["notes"] << segment.to_hash
                   end
                 end
+              elsif segment_name == "TQ1"
+
               else
                 @hash[:message][:content][segment_name.to_sym] = segment.to_hash
               end
