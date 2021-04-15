@@ -67,6 +67,14 @@ module Extensions
             end
           end
           
+          if self[:ZDRF]
+            zdrf = self[:ZDRF]
+            zdrf = [zdrf] unless zdrf.is_a?Array
+            zdrf.each do |z|
+              providers << {hash: z.provider_hash("zdrfProvider","ZDRF"), segment: z}
+            end
+          end
+          
           if self[:ZNP]
             znp = self[:ZNP]
             znp = [znp] unless znp.is_a?Array
