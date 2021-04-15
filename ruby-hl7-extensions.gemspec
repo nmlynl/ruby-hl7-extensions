@@ -3,7 +3,7 @@
 
 Gem::Specification.new do |s|
   s.name = "ruby-hl7-extensions"
-  s.version = "0.4.2"
+  s.version = "0.4.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
               "lib/ruby-hl7-extensions.rb",
               "lib/segments/dg1.rb",
               "lib/segments/mrg.rb",
+              "lib/segments/zdrf.rb",
               "lib/segments/znp.rb",
               "ruby-hl7-extensions.gemspec"]
               s.homepage = "http://github.com/nmlynl/ruby-hl7-extensions"
