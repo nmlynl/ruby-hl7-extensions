@@ -3,7 +3,7 @@
 
 Gem::Specification.new do |s|
   s.name = "ruby-hl7-extensions"
-  s.version = "0.4.3"
+  s.version = "0.4.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
               "lib/core_ext/message.rb",
               "lib/core_ext/segment.rb",
               "lib/core_ext/segments/dg1.rb",
+              "lib/core_ext/segments/drf.rb",
               "lib/core_ext/segments/err.rb",
               "lib/core_ext/segments/evn.rb",
               "lib/core_ext/segments/in1.rb",
@@ -42,6 +43,7 @@ Gem::Specification.new do |s|
               "lib/core_ext/segments/sft.rb",
               "lib/ruby-hl7-extensions.rb",
               "lib/segments/dg1.rb",
+              "lib/segments/drf.rb",
               "lib/segments/mrg.rb",
               "lib/segments/zdrf.rb",
               "lib/segments/znp.rb",
