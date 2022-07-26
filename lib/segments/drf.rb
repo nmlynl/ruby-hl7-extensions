@@ -4,7 +4,6 @@ require 'ruby-hl7'
 class HL7::Message::Segment::DRF < HL7::Message::Segment
   weight 100
   add_field :set_id
-  add_field :field1
   add_field :field2
   add_field :field3
   add_field :field4
