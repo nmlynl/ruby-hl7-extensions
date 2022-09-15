@@ -84,7 +84,8 @@ module Extensions
                                 "idTypeCode" => orderingProvider[12],
                                 "isTypeCode" => orderingProvider[13],
                                 "assigningFacility" => orderingProvider[14],
-                                "providerType" => "OP"
+                                "providerType" => "OP",
+                                "identifierTypeCode" => orderingProvider[12]
                               },
                           "orderCallBackNumber" => self.order_callback_phone_number,
                           "placerField1" => self.placer_field_1,
